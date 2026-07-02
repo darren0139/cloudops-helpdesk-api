@@ -1,0 +1,8 @@
+services:
+  api:
+    build: .
+    container_name: cloudops-helpdesk-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
