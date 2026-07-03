@@ -99,3 +99,31 @@ scripts/ec2_run_app_commands.sh
 ## Cost warning
 
 Terminate EC2 and remove unused AWS resources after testing.
+
+
+# v2: S3 Ticket Attachments
+
+Goal:
+
+Add file uploads to your existing FastAPI Helpdesk API. Ticket text stays in SQLite.
+Uploaded files/screenshots go to a private S3 bucket.
+
+Architecture:
+
+```text
+Browser -> EC2 Docker FastAPI
+              |-> SQLite: ticket records
+              |-> S3: uploaded files
+```
+
+AWS setup:
+
+1. Create S3 bucket, e.g. `cloudops-helpdesk-uploads-<your-name>`.
+2. Keep Block Public Access ON.
+3. Create IAM role for EC2.
+4. Attach the policy in `iam_policy_s3_uploads.json` after replacing the bucket name.
+5. Attach the IAM role to your EC2 instance.
+6. Add the Python files from this folder to your project.
+7. Update requirements.txt.
+8. Update app/main.py to include attachments router.
+9. Rebuild Docker image and run with S3 environment variables.

@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from app.database import init_db
-from app.routers import health, tickets
+from app.routers import health, tickets,attachments
 
 app = FastAPI(
     title="CloudOps Helpdesk API",
@@ -22,3 +22,4 @@ def root():
 
 app.include_router(health.router)
 app.include_router(tickets.router)
+app.include_router(attachments.router)
