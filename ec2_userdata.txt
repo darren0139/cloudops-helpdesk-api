@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Update packages
+dnf update -y
+
+# Install Docker and Git
+dnf install -y docker git
+
+# Start Docker now
+systemctl start docker
+
+# Make Docker start automatically when EC2 restarts
+systemctl enable docker
+
+# Allow ec2-user to run docker without sudo after reconnecting
+usermod -aG docker ec2-user
+
+
+# Optional: write a note so you know user-data ran
+echo "CloudOps EC2 setup completed" > /home/ec2-user/cloudops/setup-complete.txt
+chown ec2-user:ec2-user /home/ec2-user/cloudops/setup-complete.txt
